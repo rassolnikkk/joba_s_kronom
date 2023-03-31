@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-company
+      author: rassolnik
+      changes:
+        - createTable:
+            tableName: coompanies
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: address
+                  type: varchar(200)
+              - column:
+                  name: company_name
+                  type: varchar(200)
+              - column:
+                  name: fio
+                  type: varchar(200)
+              - column:
+                  name: inn
+                  type: varchar(200)
+              - column:
+                  name: kpp
+                  type: varchar(200)
+              - column:
+                  name: name
+                  type: varchar(200)
+              - column:
+                  name: ogrn
+                  type: varchar(200)
+              - column:
+                  name: post
+                  type: varchar(200)
