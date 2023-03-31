@@ -1,6 +1,5 @@
 package jobaskronom.demo.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import jobaskronom.demo.DTO.CompanyRequest;
 import jobaskronom.demo.DTO.DaData.*;
 import jobaskronom.demo.models.Company;
@@ -13,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,77 +28,51 @@ public class CompanyService {
     //соотнести по инну и обновить компании бдщные компании из дадтаты
     @Transactional
     public void updateCompanies(List<DaDataCompany> daDataCompanies){
-        Map<String, DaDataCompany> daDataMap = daDataCompanies.stream().collect(Collectors.toMap(DaDataCompany::getInn, daDataCompany -> daDataCompany));
+        Map<String, DaDataCompany> innToDaDataCompany = daDataCompanies.stream()
+                .collect(Collectors.toMap(
+                        DaDataCompany::getInn, daDataCompany -> daDataCompany
+                ));
+
         List<Company> allCompanies = companyRepository.findAll();
-        Map<String, Company> companyMap = allCompanies.stream().collect(Collectors.toMap(Company::getInn, c -> c));
-        HashMap<String, Company> companyHashMap = new HashMap<>(companyMap);
-        Set<Map.Entry<String, DaDataCompany>> daDataEntrySet = daDataMap.entrySet();
-        for (Map.Entry<String, DaDataCompany> daDataEntry: daDataEntrySet){
-            Company company = companyHashMap.get(daDataEntry.getKey());
-            DaDataCompany daDataEntryValue = daDataEntry.getValue();
-            company.setFio(daDataEntryValue.getFio());
-            company.setName(daDataEntryValue.getName());
-            company.setKpp(daDataEntryValue.getKpp());
-            company.setOgrn(daDataEntryValue.getOgrn());
-            company.setPost(daDataEntryValue.getPost());
-            company.setAddress(daDataEntryValue.getAddress());
-            companyRepository.save(company);
+        for (var company : allCompanies) {
+            DaDataCompany daDataCompany = innToDaDataCompany.get(company.getInn());
+
+            if (daDataCompany == null) {
+                System.out.println("В dadat'e нет компании с inn = " + company.getInn());
+                continue;
+            }
+
+            company.setFio(daDataCompany.getFio());
+            company.setName(daDataCompany.getName());
+            company.setKpp(daDataCompany.getKpp());
+            company.setOgrn(daDataCompany.getOgrn());
+            company.setPost(daDataCompany.getPost());
+            company.setAddress(daDataCompany.getAddress());
         }
 
-//        for (DaDataCompany daDataCompany: daDataCompanies) {
-//            Company company = new Company();
-//            String companyName = daDataCompany.getName();
-//            DaDataCompanyData daDataCompanyData = daDataCompany.getDaDataCompanyData();
-//            String kpp = daDataCompanyData.getKpp();
-//            String ogrn = daDataCompanyData.getOgrn();
-//            company.setOgrn(ogrn);
-//            company.setKpp(kpp);
-//            DaDataCompanyManagement daDataCompanyManagement = daDataCompanyData.getDaDataCompanyManagement();
-//            String managementName = daDataCompanyManagement.getName();
-//            String managementPost = daDataCompanyManagement.getPost();
-//            company.setFio(managementName);
-//            company.setPost(managementPost);
-//            DaDataCompanyAddress daDataCompanyAddress = daDataCompanyData.getDaDataCompanyAddress();
-//            String companyAddress = daDataCompanyAddress.getValue();
-//            company.setName(companyName);
-//            company.setAddress(companyAddress);// тут можно сделать селект для оптимизации обращений к бд
-//            Company persistedCompany = companyRepository.findCompanyByInn(daDataCompanyData.getInn()).get();
-//            persistedCompany.setAddress(company.getAddress());
-//            persistedCompany.setName(company.getName());
-//            persistedCompany.setOgrn(company.getOgrn());
-//            persistedCompany.setKpp(company.getKpp());
-//            persistedCompany.setFio(company.getFio());
-//            persistedCompany.setPost(company.getPost());
-//            companyRepository.save(persistedCompany);
-//        }
+        companyRepository.saveAll(allCompanies);
     }
 
 
-
-
-    public Company createCompanyWithInnAndCompanyName(String companyName, String inn){
-        Company company = new Company();
-        company.setCompanyName(companyName);
-        company.setInn(inn);
-        return company;
-    }
-
-    public List<String> getAllInns(){
-        return companyRepository.getAllInns();
-    }
-
-    public void updateAllExistingCompanies()  {
-        List<String> allInns = getAllInns();
+    public void updateAllExistingCompaniesWithDaData()  {
+        List<String> allInns = companyRepository.getAllInns();
         List<DaDataCompany> companies = daDataService.getDaDataCompaniesByInns(allInns);
         updateCompanies(companies);
     }
 
-    public Company saveNewCompanyFromCompanyRequest(CompanyRequest companyRequest) {
+    public Company saveCompany(CompanyRequest companyRequest) {
         Company company = new Company();
         company.setCompanyName(companyRequest.getCompanyName());
         company.setInn(companyRequest.getInn());
-        companyRepository.save(company);
-        return company;
+
+        company.setName(companyRequest.getCompanyNameDaData());
+        company.setKpp(companyRequest.getKpp());
+        company.setFio(companyRequest.getManagerName());
+        company.setPost(companyRequest.getPost());
+        company.setOgrn(companyRequest.getOgrn());
+        company.setAddress(companyRequest.getAddress());
+
+        return companyRepository.save(company);
     }
 }
 // тесты с моками
