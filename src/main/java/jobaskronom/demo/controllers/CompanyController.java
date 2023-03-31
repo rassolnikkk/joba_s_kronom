@@ -23,6 +23,7 @@ public class CompanyController {
 
     @PostMapping("/companies")
     public ResponseEntity<Company> addCompany(@RequestBody @Valid CompanyRequest companyRequest){
-        return new ResponseEntity(companyService.saveNewCompanyFromCompanyRequest(companyRequest), HttpStatus.CREATED);
+        var company = companyService.saveCompany(companyRequest);
+        return new ResponseEntity<>(company, HttpStatus.CREATED);
     }
 }
