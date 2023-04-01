@@ -1,6 +1,6 @@
 package jobaskronom.demo.DTO.DaData;
 
-import jobaskronom.demo.DTO.DaData.DaDataCompany;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.List;
@@ -12,7 +12,8 @@ import java.util.List;
 @Getter
 public class DaDataResponse {
 
-    private List<DaDataCompany> suggestions;
+    @JsonProperty("suggestions")
+    private List<DaDataCompany> daDataCompanies;
 
 
 }

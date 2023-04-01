@@ -1,6 +1,7 @@
 package jobaskronom.demo.DTO.DaData;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @AllArgsConstructor
@@ -11,7 +12,8 @@ import lombok.*;
 @Getter
 public class DaDataCompanyManagement {
 
-    private String name;
+    @JsonProperty("name")
+    private String managerName;
 
     private String post;
 }

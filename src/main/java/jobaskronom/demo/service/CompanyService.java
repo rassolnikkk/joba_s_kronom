@@ -8,10 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,8 +36,8 @@ public class CompanyService {
                 continue;
             }
 
-            company.setFio(daDataCompany.getFio());
-            company.setName(daDataCompany.getName());
+            company.setManagerName(daDataCompany.getFio());
+            company.setDaDataName(daDataCompany.getName());
             company.setKpp(daDataCompany.getKpp());
             company.setOgrn(daDataCompany.getOgrn());
             company.setPost(daDataCompany.getPost());
@@ -61,9 +59,9 @@ public class CompanyService {
         company.setCompanyName(companyRequest.getCompanyName());
         company.setInn(companyRequest.getInn());
 
-        company.setName(companyRequest.getCompanyNameDaData());
+        company.setDaDataName(companyRequest.getCompanyNameDaData());
         company.setKpp(companyRequest.getKpp());
-        company.setFio(companyRequest.getManagerName());
+        company.setManagerName(companyRequest.getManagerName());
         company.setPost(companyRequest.getPost());
         company.setOgrn(companyRequest.getOgrn());
         company.setAddress(companyRequest.getAddress());

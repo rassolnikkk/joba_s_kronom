@@ -17,11 +17,13 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @Column(name = "name")
+    private String daDataName;
 
     private String kpp;
 
-    private String fio;
+    @Column(name = "fio")
+    private String managerName;
 
     private String post;
 

@@ -36,7 +36,7 @@ public class DaDataService {
                     httpHeaders -> httpHeaders.add("Authorization", token)
             );
 
-            DaDataCompany daDataCompany = responseBody.getSuggestions().get(0);
+            DaDataCompany daDataCompany = responseBody.getDaDataCompanies().get(0);
             listOfCompanies.add(daDataCompany);
         }
         return listOfCompanies;

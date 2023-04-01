@@ -30,7 +30,7 @@ public class DaDataCompany {
     }
 
     public String getFio(){
-        return daDataCompanyData.getDaDataCompanyManagement().getName();
+        return daDataCompanyData.getDaDataCompanyManagement().getManagerName();
     }
 
     public String getPost(){
@@ -38,6 +38,6 @@ public class DaDataCompany {
     }
 
     public String getAddress(){
-        return daDataCompanyData.getDaDataCompanyAddress().getValue();
+        return daDataCompanyData.getDaDataCompanyAddress().getAddress();
     }
 }

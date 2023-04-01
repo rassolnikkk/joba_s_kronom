@@ -46,13 +46,13 @@ public class CompanyTests {
         company = Company.builder()
                 .id(1L)
                 .kpp("773601001")
-                .fio("Греф Герман Оскарович")
+                .managerName("Греф Герман Оскарович")
                 .companyName(companyRequest.getCompanyName())
                 .address("г Москва, ул Вавилова, д 19")
                 .inn(companyRequest.getInn())
                 .post("ПРЕЗИДЕНТ, ПРЕДСЕДАТЕЛЬ ПРАВЛЕНИЯ")
                 .ogrn("1027700132195")
-                .name("ПАО СБЕРБАНК")
+                .daDataName("ПАО СБЕРБАНК")
                 .build();
         try {
             daDataCompanies.add(objectMapper.readValue(new File("src/test/resources/templates/dadatacompanies_json/alfa.json"), DaDataCompany.class));
@@ -83,15 +83,15 @@ public class CompanyTests {
         Company companyForCheck;
         for (var company: companyMockRepository.getMockTable()){
             DaDataCompany daDataCompany = innToDaDataCompany.get(company.getInn());
-            company.setFio(daDataCompany.getFio());
-            company.setName(daDataCompany.getName());
+            company.setManagerName(daDataCompany.getFio());
+            company.setDaDataName(daDataCompany.getName());
             company.setKpp(daDataCompany.getKpp());
             company.setOgrn(daDataCompany.getOgrn());
             company.setPost(daDataCompany.getPost());
             company.setAddress(daDataCompany.getAddress());
             companyForCheck = company;
             assertThat(companyMockRepository.getMockTable().contains(companyForCheck));
-            assertThat(companyForCheck.getFio().equals("Греф  Герман Оскарович"));
+            assertThat(companyForCheck.getManagerName().equals("Греф  Герман Оскарович"));
         }
 
     }
