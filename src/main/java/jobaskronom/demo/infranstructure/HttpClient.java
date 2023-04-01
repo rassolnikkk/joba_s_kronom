@@ -1,5 +1,6 @@
 package jobaskronom.demo.infranstructure;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -8,6 +9,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
 @Component
+@AllArgsConstructor
 public class HttpClient {
     private final WebClient webClient = WebClient.create();
 

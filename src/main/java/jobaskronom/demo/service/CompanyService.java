@@ -22,10 +22,6 @@ public class CompanyService {
 
     private final DaDataService daDataService;
 
-    //получить список всех компаний из бд
-    //вытащить список инн по компаниям с бд
-    //получить список компаний из дадаты
-    //соотнести по инну и обновить компании бдщные компании из дадтаты
     @Transactional
     public void updateCompanies(List<DaDataCompany> daDataCompanies){
         Map<String, DaDataCompany> innToDaDataCompany = daDataCompanies.stream()
