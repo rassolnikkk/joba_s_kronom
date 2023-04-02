@@ -36,4 +36,8 @@ public class Company {
     @Column(unique = true)
     private String inn;
 
+    public Company(String companyName, String inn) {
+        this.companyName = companyName;
+        this.inn = inn;
+    }
 }
