@@ -17,27 +17,27 @@ public class DaDataCompany {
     @JsonProperty("data")
     private DaDataCompanyData daDataCompanyData;
 
-    public String getInn(){
+    public String getInn() {
         return daDataCompanyData.getInn();
     }
 
-    public String getKpp(){
+    public String getKpp() {
         return daDataCompanyData.getKpp();
     }
 
-    public String getOgrn(){
+    public String getOgrn() {
         return daDataCompanyData.getOgrn();
     }
 
-    public String getFio(){
+    public String getFio() {
         return daDataCompanyData.getDaDataCompanyManagement().getManagerName();
     }
 
-    public String getPost(){
+    public String getPost() {
         return daDataCompanyData.getDaDataCompanyManagement().getPost();
     }
 
-    public String getAddress(){
+    public String getAddress() {
         return daDataCompanyData.getDaDataCompanyAddress().getAddress();
     }
 }

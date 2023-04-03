@@ -24,7 +24,6 @@ public class HttpClient {
                     .get()
                     .getBody();
         } catch (InterruptedException | ExecutionException e) {
-//            logger
             System.out.println("Вызов POST запроса по url = " + url + ", завершился с ошибкой. " + e.getMessage());
             throw new RuntimeException(e);
         }

@@ -21,7 +21,7 @@ public class CompanyService {
     private final DaDataService daDataService;
 
     @Transactional
-    public void updateCompanies(List<DaDataCompany> daDataCompanies){
+    public void updateCompanies(List<DaDataCompany> daDataCompanies) {
         Map<String, DaDataCompany> innToDaDataCompany = daDataCompanies.stream()
                 .collect(Collectors.toMap(
                         DaDataCompany::getInn, daDataCompany -> daDataCompany
@@ -48,7 +48,7 @@ public class CompanyService {
     }
 
 
-    public void updateAllExistingCompaniesWithDaData()  {
+    public void updateAllExistingCompaniesWithDaData() {
         List<String> allInns = companyRepository.getAllInns();
         List<DaDataCompany> companies = daDataService.getDaDataCompaniesByInns(allInns);
         updateCompanies(companies);

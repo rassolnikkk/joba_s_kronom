@@ -1,6 +1,6 @@
 package jobaskronom.demo.controllers;
 
-//alt enter на неисползуемые импорты
+
 
 import jakarta.validation.Valid;
 import jobaskronom.demo.DTO.CompanyRequest;
@@ -22,7 +22,7 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @PostMapping("/companies")
-    public ResponseEntity<Company> addCompany(@RequestBody @Valid CompanyRequest companyRequest){
+    public ResponseEntity<Company> addCompany(@RequestBody @Valid CompanyRequest companyRequest) {
         var company = companyService.saveCompany(companyRequest);
         return new ResponseEntity<>(company, HttpStatus.CREATED);
     }

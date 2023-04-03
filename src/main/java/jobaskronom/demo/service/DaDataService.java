@@ -17,8 +17,8 @@ public class DaDataService {
     private final String token;
 
     public DaDataService(
-            HttpClient httpClient, @Value("${dadata.uri}")String baseUrl,
-            @Value("${dadata.token}")String token
+            HttpClient httpClient, @Value("${dadata.uri}") String baseUrl,
+            @Value("${dadata.token}") String token
     ) {
         this.httpClient = httpClient;
         this.baseUrl = baseUrl;

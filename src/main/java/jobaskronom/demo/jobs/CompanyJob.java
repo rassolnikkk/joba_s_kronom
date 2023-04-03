@@ -13,7 +13,7 @@ public class CompanyJob {
     private final CompanyService companyService;
 
 
-    @Scheduled(cron ="${crontab}")
+    @Scheduled(cron = "${crontab}", zone = "${crontab.timezone}")
     public void updateCompaniesWithDaData() {
         companyService.updateAllExistingCompaniesWithDaData();
     }
